@@ -13,16 +13,16 @@ import persistConfig from './config/persistorConfig'
 import {Provider} from 'react-redux'
 
 
-const middleWares = [logger,routerMiddleware];
+const middleWares = [logger];
 
 const pReducer = persistReducer(persistConfig, reducers)
 const store = createStore(pReducer)
 
-const persistStore = persistStore(store)
+const pStore = persistStore(store)
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistStore}>
+    <PersistGate loading={null} persistor={pStore}>
       <React.StrictMode>
         <App />
       </React.StrictMode>
