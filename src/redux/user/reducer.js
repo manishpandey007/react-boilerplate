@@ -5,15 +5,15 @@ const initialState = {
     name:"",
     email:"",
     token:"",
-    loading:""
+    loading:false
 }
 
 export default function  userReducer(state = initialState,action){
     switch (action.type) {
         case actions.SET_STATE:
             return {...state, ...action.payload}
-        case actions.SET_TOKEN:
-            return {...state, token:action.payload.token}
+        case actions.LOGIN:
+            return {...state, token:action.payload.token,email:action.payload.email,name:action.payload.name}
         case actions.LOGOUT:
             return {}
         default:
