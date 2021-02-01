@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {logger} from 'redux-logger'
 import {routerMiddleware} from 'connected-react-router'; 
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware, compose } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import reducers from './redux/reducer'
@@ -15,8 +15,8 @@ import {Provider} from 'react-redux'
 
 const middleWares = [logger];
 
-const pReducer = persistReducer(persistConfig, reducers)
-const store = createStore(pReducer)
+const pReducer = persistReducer(persistConfig, reducers(reducers))
+export const store = createStore(pReducer,compose(applyMiddleware(...middleWares)))
 
 const pStore = persistStore(store)
 

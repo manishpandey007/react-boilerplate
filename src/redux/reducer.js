@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux'
 import user from "./user/reducer";
 
-export default history => combineReducers({
+export default reducers => combineReducers({
     user,
 });

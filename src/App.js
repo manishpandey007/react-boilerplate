@@ -1,15 +1,40 @@
 import logo from './logo.svg';
 import './App.css';
 import { connect } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import {latestVersion} from './services/user'
+import actions from './redux/user/actions'
 
-function App() {
+function App(props) {
+
+  const [name,setName] = useState("Manish");
+
+  useEffect(()=>{
+    console.log(props)
+    props.dispatch({
+      type: actions.SET_STATE,
+      payload:{
+        token:"hello",
+        name:"manish"
+      }
+    })
+    const response = latestVersion().then(res => {
+      props.dispatch({
+        type: actions.SET_STATE,
+        payload:res.data
+      })
+      return res;
+    }
+    );
+    console.log(response);
+  },[]);
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          {name}
         </p>
         <a
           className="App-link"
@@ -24,4 +49,9 @@ function App() {
   );
 }
 
-export default connect()(App);
+const mapStateToProps = (state) => ({
+  user: state.user
+})
+
+
+export default connect(mapStateToProps)(App);

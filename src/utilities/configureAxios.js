@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const axiosConfiguration = () => axios.create({
-    baseURL:"http://127.0.0.1:8000/api/v1",
+    baseURL:"https://api.reallearning.sbtechzone.com/api/v1",
     timeout:30000
 })
 
@@ -14,7 +14,7 @@ axiosInstance.interceptors.request.use(
 
         config.headers = {
             Accept: 'application/json',
-            Authorization: `Bearer ${state.user.token}`
+            Authorization: `Bearer `
         }
         return config
     }
@@ -28,3 +28,5 @@ axiosInstance.interceptors.response.use(
         console.log(err)
     }
 )
+
+export default axiosInstance

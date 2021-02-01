@@ -15,3 +15,13 @@ export async function verfiOtp(mobile,otp) {
         console.log(error)
     })
 }
+
+export async function latestVersion() {
+    return axiosInstance.get('/latest-version')
+    .then(res => {return res;})
+    .catch(
+        error => {
+            console.log(error)
+        }
+    )
+}
