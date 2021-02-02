@@ -10,7 +10,6 @@ function App(props) {
   const [name,setName] = useState("Manish");
 
   useEffect(()=>{
-    console.log(props)
     props.dispatch({
       type: actions.SET_STATE,
       payload:{

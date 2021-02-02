@@ -1,6 +1,6 @@
 import {all, takeLatest, put, call} from 'redux-saga/effects'
 import actions from './actions'
-import {login,verifyOtp} from '../../services/user'
+import {login,verifyOtp,latestVersion} from '../../services/user'
 import { push } from 'connected-react-router';
 
 export function* LOGIN({ payload }){
@@ -13,16 +13,12 @@ export function* LOGIN({ payload }){
         }
     });
 
-    const response = yield call(login,email,password);
+    const response = yield call(latestVersion);
 
     if(response.success){
         yield put({
             type:actions.LOGIN,
-            payload:{
-                token: response.token,
-                name:response.name,
-                email:response.email
-            }
+            payload:response.data
         })
     }
 
