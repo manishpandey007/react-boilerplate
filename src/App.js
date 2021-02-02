@@ -14,20 +14,37 @@ function App(props) {
     props.dispatch({
       type: actions.SET_STATE,
       payload:{
-        token:"hello",
-        name:"manish"
+        loading:true
       }
     })
-    const response = latestVersion().then(res => {
+    latestVersion().then(res => {
       props.dispatch({
         type: actions.SET_STATE,
         payload:res.data
       })
+      props.dispatch({
+        type: actions.SET_STATE,
+        payload:{
+          loading:false
+        }
+      })
       return res;
     }
     );
-    console.log(response);
   },[]);
+
+  if(props.user.loading){
+    return (
+      <div className="App">
+      <header className="App-header">
+        <img src={logo} className="App-logo" alt="logo" />
+        <p>
+          Loading
+        </p>
+      </header>
+    </div>
+    )
+  }
 
   return (
     <div className="App">
