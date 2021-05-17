@@ -5,19 +5,21 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {logger} from 'redux-logger'
 import {routerMiddleware} from 'connected-react-router'; 
+import createSagaMiddleware from 'redux-saga'
 import { createStore, applyMiddleware, compose } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
 import reducers from './redux/reducer'
+import sagas from './redux/sagas'
 import persistConfig from './config/persistorConfig'
 import {Provider} from 'react-redux'
 
 
-const middleWares = [logger];
-
+const sagaMiddleware = createSagaMiddleware()
+const middleWares = [sagaMiddleware,logger];
 const pReducer = persistReducer(persistConfig, reducers(reducers))
 export const store = createStore(pReducer,compose(applyMiddleware(...middleWares)))
-
+sagaMiddleware.run(sagas)
 const pStore = persistStore(store)
 
 ReactDOM.render(

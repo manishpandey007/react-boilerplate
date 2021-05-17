@@ -1,7 +1,9 @@
 import axios from 'axios'
+import {notification} from 'antd'
+import {get} from 'lodash';
 
 const axiosConfiguration = () => axios.create({
-    baseURL:"https://api.reallearning.sbtechzone.com/api/v1",
+    baseURL:"https://api2.cedarwood.squareboat.info/api/v1",
     timeout:30000
 })
 
@@ -26,6 +28,16 @@ axiosInstance.interceptors.response.use(
     },
     err => {
         console.log(err)
+        if (err.response) {
+            if (get(err, 'response.status', false)) {
+              if (err.response.status === 400) {
+                notification.warn({
+                    message:'ERROR!!!     ',
+                    description: get(err, 'response.data.message', 'Network Error')
+                })
+              }
+            }
+          }
     }
 )
 

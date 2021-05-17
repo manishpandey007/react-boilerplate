@@ -1,8 +1,8 @@
 const actions = {
+    SET_STATE: 'user/SET_STATE',
     LOGIN: 'user/LOGIN',
-    LOGIN_ASYNC: 'user/LOGIN_ASYNC',
+    LOAD_CURRENT_ACCOUNT: 'user/LOAD_CURRENT_ACCOUNT',
     LOGOUT: 'user/LOGOUT',
-    SET_STATE: 'user/SET_STATE'
-}
-
-export default actions
+  }
+  
+  export default actions

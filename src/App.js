@@ -1,73 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
-import { connect } from 'react-redux';
-import { useEffect, useState } from 'react';
-import {latestVersion} from './services/user'
-import actions from './redux/user/actions'
+import React from 'react';
 
-function App(props) {
+import NavigationPaths from './routes';
+import { BrowserRouter as Router, Route, Switch,Redirect } from 'react-router-dom';
 
-  const [name,setName] = useState("Manish");
+import LoginPage from './pages/LoginPage';
+import 'antd/dist/antd.css';
 
-  useEffect(()=>{
-    props.dispatch({
-      type: actions.SET_STATE,
-      payload:{
-        loading:true
-      }
-    })
-    latestVersion().then(res => {
-      props.dispatch({
-        type: actions.SET_STATE,
-        payload:res.data
-      })
-      props.dispatch({
-        type: actions.SET_STATE,
-        payload:{
-          loading:false
-        }
-      })
-      return res;
-    }
-    );
-  },[]);
+const ProtectedRoute = ({isEnabled, ...props}) => {
+  return (isEnabled) ? <Route {...props} /> : <Redirect to="/"/>;
+};
 
-  if(props.user.loading){
-    return (
-      <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Loading
-        </p>
-      </header>
-    </div>
-    )
-  }
-
+const Navigator = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          {name}
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <ProtectedRoute exact path={NavigationPaths.LOGIN} component={LoginPage} isEnabled={true} />
+      </Switch>
+    </Router>
   );
-}
+};
 
-const mapStateToProps = (state) => ({
-  user: state.user
-})
-
-
-export default connect(mapStateToProps)(App);
+export default Navigator;
